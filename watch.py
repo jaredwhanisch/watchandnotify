@@ -9,6 +9,8 @@ port = 465  # For SSL
 keywords = ["BREW", "VOSTOK"]
 #initializing the email contents, setting the subject
 message = """Subject: Found a watch!\n\n"""
+#Flag to determine if a watch was found, 
+update = False
 #read-only reddit instance
 reddit = praw.Reddit(
     client_id=os.environ.get('REDDIT_CLIENT_ID'),
