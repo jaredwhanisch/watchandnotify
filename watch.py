@@ -33,5 +33,5 @@ context = ssl.create_default_context()
 with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
     server.login(os.environ.get('SENDER_EMAIL'), os.environ.get('SENDER_PASSWORD'))
     if update:
-        server.sendmail(os.environ.get('SENDER_EMAIL'), os.environ.get('DESTINATION_EMAIL'), message)
+        server.sendmail(os.environ.get('SENDER_EMAIL'), os.environ.get('DESTINATION_EMAIL'), message.encode('utf-8'))
     
