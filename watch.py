@@ -6,7 +6,7 @@ import time
 port = 465  # For SSL
 
 #list of watches you want to be notified for
-keywords = ["BREW", "VOSTOK"]
+keywords = ["BREW"]
 #initializing the email contents, setting the subject
 message = """Subject: Found a watch!\n\n"""
 #Flag to determine if a watch was found, 
@@ -25,7 +25,7 @@ for submission in reddit.subreddit("watchexchange").new():
         #if the submission was created within the last hour and the title contains one of the keywords
         if((time.time() - submission.created_utc < 3600) and (submission.title.upper().find(keyword) != -1)):
             #appending all watches that match what I'm looking for to the body of the email
-            message += "reddit.com"+submission.permalink+"\n"
+            message += "reddit.com"+submission.permalink+"\n\n"
             update = True
 
 # Create a secure SSL context
