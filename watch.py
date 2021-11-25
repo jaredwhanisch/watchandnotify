@@ -9,7 +9,7 @@ port = 465  # For SSL
 keywords = ["BREW"]
 #initializing the email contents, setting the subject
 message = """Subject: Found a watch!\n\n"""
-#Flag to determine if a watch was found, 
+#Flag to determine if a watch was found 
 update = False
 #read-only reddit instance
 reddit = praw.Reddit(
@@ -20,7 +20,7 @@ reddit = praw.Reddit(
 
 #looking at the new submissions on r/watchexchange
 for submission in reddit.subreddit("watchexchange").new():
-    #interating through all the different watches I'm interested in being notified for
+    #interating through all the different watches you're interested in being notified for
     for keyword in keywords:
         #if the submission was created within the last hour and the title contains one of the keywords
         if((time.time() - submission.created_utc < 3600) and (submission.title.upper().find(keyword) != -1)):
@@ -28,10 +28,11 @@ for submission in reddit.subreddit("watchexchange").new():
             message += "reddit.com"+submission.permalink+"\n\n"
             update = True
 
-# Create a secure SSL context
+# Create a secure SSL context and send email
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
     server.login(os.environ.get('SENDER_EMAIL'), os.environ.get('SENDER_PASSWORD'))
+    #if watch was found
     if update:
         server.sendmail(os.environ.get('SENDER_EMAIL'), os.environ.get('DESTINATION_EMAIL'), message.encode('utf-8'))
     
